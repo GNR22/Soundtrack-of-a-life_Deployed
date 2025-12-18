@@ -1,0 +1,30 @@
+1st terminal 
+npm run dev
+
+2nd terminal
+php artisan serve
+
+
+
+got to 
+http://127.0.0.1:8000
+
+and click dashboard
+
+If dashboard not working you might need to register you email and password
+
+
+
+before you run, run these first
+clear cache all clear command 
+php artisan optimize:clear
+
+
+
+
+optional: 
+clear cache specific commands
+php artisan cache:clear
+php artisan route:clear
+php artisan config:clear
+php artisan view:clear

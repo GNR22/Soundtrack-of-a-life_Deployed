@@ -1,0 +1,45 @@
+soundtrack/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── MusicController.php       <-- The "Brain": Coordinates all 4 APIs
+│   │   │   ├── StoryItemController.php   <-- Handles CRUD for "My Music Story"
+│   │   │   ├── ProfileController.php
+│   │   │   └── Controller.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   └── StoryItem.php                 <-- Links Users to saved Albums (with ratings/notes)
+│   └── Services/                         <-- NEW: Dedicated API Logic
+│       ├── SpotifyService.php            <-- Visuals, Audio Previews, Trending Grid
+│       ├── MusicBrainzService.php        <-- Historical Context & Timelines
+│       ├── LastfmService.php             <-- Biographies & Narratives
+│       └── GeniusService.php             <-- Lyric Links & Song Metadata
+├── database/
+│   ├── migrations/
+│   │   └── xxxx_create_story_items_table.php  <-- The schema for your music collection
+│   └── seeders/
+├── resources/
+│   ├── css/
+│   │   └── app.css
+│   └── js/
+│       ├── Components/                   <-- Reusable UI bits (Buttons, Inputs)
+│       ├── Layouts/
+│       │   └── AuthenticatedLayout.jsx   <-- The shell for logged-in pages
+│       └── Pages/
+│           ├── Dashboard.jsx             <-- Landing page with "Trending Artists" grid
+│           ├── Welcome.jsx
+│           ├── Artist/                   <-- NEW: Research Pages
+│           │   ├── Show.jsx              <-- Artist Profile & Stats
+│           │   ├── Albums.jsx            <-- Discography Grid
+│           │   ├── AlbumInfo.jsx         <-- The "Encyclopedia" View (All 4 APIs combined)
+│           │   └── History.jsx           <-- MusicBrainz Timeline Visualization
+│           └── Story/                    <-- NEW: Personal Library
+│               └── Index.jsx             <-- "My Music Story" List (CRUD interface)
+├── routes/
+│   ├── web.php                           <-- Defines routes for /dashboard, /artist/*, /story-items
+│   └── console.php
+├── .env                                  <-- Contains your API Keys (Spotify, Last.fm, etc.)
+├── composer.json
+├── package.json
+├── vite.config.js
+└── README.md                             <-- Documentation we just generated

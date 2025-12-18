@@ -1,0 +1,47 @@
+# --- Dependencies ---
+/node_modules
+/vendor
+
+# --- Environment & Sensitive Data ---
+# CRITICAL: This hides your Spotify, Last.fm, and Genius keys
+.env
+.env.backup
+.env.production
+*.phpnew-elixir-error.log
+
+# --- Vite / React Build Assets ---
+/public/build
+/public/hot
+/public/storage
+storage/*.key
+
+# --- Laravel Specific ---
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/app/public/.gitignore
+!/storage/framework/.gitignore
+!/storage/logs/.gitignore
+
+# --- Testing & Cache ---
+.phpunit.result.cache
+.phpunit.cache
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# --- IDE & System Files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Compiled Assets ---
+mix-manifest.json
+package-lock.json
+yarn.lock
+
+# Sensitive local notes
+database details.txt

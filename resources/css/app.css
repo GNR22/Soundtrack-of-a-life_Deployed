@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------
+   ROOT THEME COLORS (Neon + Pastel + Galaxy)
+------------------------------------------- */
+:root {
+    --neon: #8b5cf6;      /* Violet neon */
+    --pastel: #fbcfe8;    /* Soft pink */
+    --galaxy: #60a5fa;    /* Soft star blue */
+}
+
+/* ------------------------------------------
+   GLOBAL BACKGROUND (Night Sky + Nebula)
+------------------------------------------- */
+.bg-mix {
+    background:
+        radial-gradient(ellipse at 10% 20%, rgba(139, 92, 246, 0.12), transparent 8%),
+        radial-gradient(ellipse at 90% 80%, rgba(96, 165, 250, 0.08), transparent 10%),
+        linear-gradient(180deg, #071029, #000814);
+}
+
+/* ------------------------------------------
+   GLASS / TRANSLUCENT CARD
+------------------------------------------- */
+.card-soft {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(6px);
+    border-radius: 1rem;
+}
+
+.card-soft-light {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ------------------------------------------
+   BUTTON ENHANCEMENTS
+------------------------------------------- */
+
+.btn-neon {
+    background: var(--neon);
+    color: black;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.6rem;
+    transition: 0.2s ease;
+}
+.btn-neon:hover {
+    filter: brightness(0.9);
+}
+
+.btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 0.7rem 1.2rem;
+    color: white;
+    border-radius: 0.6rem;
+}
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ------------------------------------------
+   TEXT EFFECTS
+------------------------------------------- */
+
+.text-glow {
+    text-shadow: 0 0 6px rgba(139, 92, 246, 0.7),
+                 0 0 12px rgba(96, 165, 250, 0.5);
+}
+
+.title-neon {
+    color: white;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
+}
+
+/* ------------------------------------------
+   CUSTOM SCROLLBAR
+------------------------------------------- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--neon);
+    border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a78bfa;
+}
+
+/* ------------------------------------------
+   IMAGE PLACEHOLDER
+------------------------------------------- */
+.album-fallback {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ------------------------------------------
+   PAGE TRANSITIONS
+------------------------------------------- */
+.page-enter {
+    opacity: 0;
+    transform: translateY(12px);
+}
+.page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 300ms ease;
+}
+
+/* ------------------------------------------
+   LINK HOVER EFFECT
+------------------------------------------- */
+
+.link-neon {
+    color: var(--galaxy);
+    transition: 0.2s ease;
+}
+.link-neon:hover {
+    color: white;
+    text-shadow: 0 0 6px rgba(96, 165, 250, 0.9);
+}
+
+/* ------------------------------------------
+   SHINY HOVER CARD
+------------------------------------------- */
+.card-hover-glow:hover {
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4),
+                0 0 25px rgba(96, 165, 250, 0.3);
+    transform: scale(1.02);
+    transition: 0.2s ease;
+}
+
+/* ------------------------------------------
+   FLOATING AUDIO PLAYER (NEW)
+------------------------------------------- */
+.player-box {
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 320px;
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+.player-title {
+    font-weight: 600;
+    color: var(--pastel);
+    font-size: 1rem;
+}
+
+.player-artist {
+    color: #d1d5db;
+    font-size: 0.85rem;
+}
+
+.player-btn-close {
+    background: rgba(255, 0, 0, 0.5);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    transition: 0.2s ease;
+}
+.player-btn-close:hover {
+    background: rgba(255, 0, 0, 0.8);
+}
+
+/* Smooth fade-in for the player */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
