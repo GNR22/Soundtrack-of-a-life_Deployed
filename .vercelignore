@@ -1,0 +1,38 @@
+# --- System & Git ---
+.git
+.gitignore
+.gitattributes
+.editorconfig
+
+# --- Environment & Sensitive Data ---
+.env
+.env.example
+.env.backup
+.env.production
+*.key
+database details.txt
+
+# --- Dependencies (Vercel installs these during build) ---
+node_modules
+vendor
+
+# --- Testing & Local Dev Tools ---
+tests
+phpunit.xml
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
+
+# --- Documentation & Notes ---
+README.md
+README2.md
+folder strucutre.txt
+how to run.txt
+folder structure.txt
+
+# --- IDE Settings ---
+.vscode
+.idea
+.DS_Store
+Thumbs.db

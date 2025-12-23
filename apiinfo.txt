@@ -1,0 +1,12 @@
+
+Spotify	
+🟢 Active	The Engine. Provides the search results, album covers, tracklists, and the new Embed Player for audio.
+
+MusicBrainz	
+🟢 Active	The Historian. Provides the factual metadata, release dates, and career timelines for the "History" section.
+
+Last.fm	
+🟢 Active	The Storyteller. Fetches the written biographies for artists and the "Wiki" descriptions for albums.
+
+Lyrics.ovh	
+🟢 New	The Vocalist. A free, keyless API that returns the raw text lyrics for your new pop-up modal.

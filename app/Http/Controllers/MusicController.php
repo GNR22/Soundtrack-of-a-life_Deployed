@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\SpotifyService;
@@ -29,6 +29,20 @@ class MusicController extends Controller
         $this->genius = $genius;
     }
 
+    
+
+public function index()
+{
+    // Check the cache first. If missing, ask Spotify.
+    $featured = Cache::remember('dashboard_featured', 3600, function () {
+        // FIX: Use $this->music, matching your constructor
+        return $this->music->getFeaturedArtists(); 
+    });
+
+    return Inertia::render('Dashboard', [
+        'featured' => $featured
+    ]);
+}
     private function getAuth(Request $request): array
     {
         return [
@@ -68,23 +82,39 @@ class MusicController extends Controller
         ]);
     }
 
-    public function albumInfo(Request $request, $artist, $id)
+   public function albumInfo(Request $request, $artist, $id)
     {
-        // 1. Core Data from Spotify
-        $spotifyDetails = $this->music->getAlbumDetails($id); 
+        // 1. Define a unique cache key for this specific album
+        // We use the ID so every album gets its own cache entry
+        $cacheKey = "album_details_{$id}";
 
-        // 2, 3, 4. Combined Metadata
-        return Inertia::render('Artist/AlbumInfo', [
-            'auth' => $this->getAuth($request),
-            'album' => [
+        // 2. Try to get data from Cache first. 
+        // If missing, run the function (API calls), save it for 24 hours (86400s), and return it.
+        $albumData = Cache::remember($cacheKey, 86400, function () use ($artist, $id) {
+            
+            // --- EXPENSIVE API WORK HAPPENS HERE ---
+            
+            // A. Core Data from Spotify
+            $spotifyDetails = $this->music->getAlbumDetails($id); 
+
+            // B. Return the combined array to be saved in Cache
+            return [
                 'name' => $spotifyDetails['name'],
                 'artist' => $artist,
                 'image' => $spotifyDetails['images'][0]['url'] ?? null,
                 'tracks' => $spotifyDetails['tracks']['items'],
+                
+                // Secondary API Calls (MusicBrainz + Last.fm)
                 'history' => $this->brainz->getAlbumMetadata($spotifyDetails['name']),
                 'lastfm_info' => $this->lastfm->getAlbumBio($artist, $spotifyDetails['name']),
-            
-            ]
+            ];
+        });
+
+        // 3. Render the View
+        // Note: 'auth' is NOT cached because it changes depending on who is logged in.
+        return Inertia::render('Artist/AlbumInfo', [
+            'auth' => $this->getAuth($request),
+            'album' => $albumData,
         ]);
     }
 
@@ -94,11 +124,14 @@ class MusicController extends Controller
         $artist = $request->input('artist');
         $track = $request->input('track');
 
-        // Use the service to get the real Genius data
-        $songData = $this->genius->getSongData($artist, $track);
+        // 1. Call the Lyrics.ovh API (No Key Needed!)
+        $response = \Illuminate\Support\Facades\Http::get("https://api.lyrics.ovh/v1/{$artist}/{$track}");
+        
+        $data = $response->json();
 
+        // 2. Return the text, or a friendly error if not found
         return response()->json([
-            'url' => $songData['url'] ?? "https://genius.com/search?q=" . urlencode("$artist $track")
+            'lyrics' => $data['lyrics'] ?? "Sorry, full lyrics for this track are not available in the public database."
         ]);
     }
 }

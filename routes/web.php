@@ -7,12 +7,14 @@ use App\Http\Controllers\MusicController;
 use App\Http\Controllers\StoryItemController;
 use App\Http\Controllers\ProfileController;
 use App\Services\SpotifyService;
+use App\Services\LastfmService; 
+
 /*
 |--------------------------------------------------------------------------
 | Public Routes (NO auth)
 |--------------------------------------------------------------------------
 */
-
+/*
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -21,7 +23,17 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+*/
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes (NO auth)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', function () {
+    return redirect()->route('register');
+});
 /*
 |--------------------------------------------------------------------------
 | Auth Routes (Breeze)
@@ -38,14 +50,35 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-   // Import the service at the top of the file if not already there, 
-    // or just inject it like this:
-   Route::get('/dashboard', function (SpotifyService $spotify) {
-    return Inertia::render('Dashboard', [
-        // This passes the data to your React component
-        'featured' => $spotify->getFeaturedArtists() 
-    ]);
-})->name('dashboard');
+   // Dashboard Route
+   Route::get('/dashboard', function (SpotifyService $spotify, LastfmService $lastfm) {
+        $trendingAlbums = $spotify->getTrendingAlbums();
+        
+        // Enrich each album with Last.FM and Spotify data
+        $enrichedAlbums = array_map(function ($album) use ($lastfm, $spotify) {
+            // Get Last.FM album info for story/bio
+            $lastfmInfo = $lastfm->getAlbumInfo($album['artist'], $album['title']);
+            
+            // Get Spotify album data for explore link
+            $spotifyAlbumData = $spotify->searchAlbum($album['artist']);
+            $spotifyAlbumUrl = null;
+            
+            if (isset($spotifyAlbumData['albums']['items'][0])) {
+                $spotifyAlbumUrl = $spotifyAlbumData['albums']['items'][0]['external_urls']['spotify'] ?? null;
+            }
+            
+            return array_merge($album, [
+                'lastfmInfo' => $lastfmInfo,
+                'spotifyUrl' => $spotifyAlbumUrl,
+            ]);
+        }, $trendingAlbums);
+        
+        return Inertia::render('Dashboard', [
+            // This passes the data to your React component
+            'featured' => $spotify->getFeaturedArtists(),
+            'trendingAlbums' => $enrichedAlbums
+        ]);
+    })->name('dashboard');
 
 
     // MUSIC (API-driven)
@@ -76,11 +109,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/artist/{artist}/history', [MusicController::class, 'history'])
-    ->name('artist.history');
+        ->name('artist.history');
     
-    Route::get('/artist/{artist}/album/{id}', [MusicController::class, 'albumInfo'])
-    ->name('artist.album');
-
     // Fetch Lyrics URL on demand
     Route::get('/lyrics/fetch', [MusicController::class, 'lyrics'])->name('lyrics.fetch');
 });

@@ -23,8 +23,11 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@react-three/drei": "^9.122.0",
+        "@react-three/fiber": "^8.16.8",
         "fast-average-color": "^9.5.0",
         "framer-motion": "^12.23.26",
-        "react-hot-toast": "^2.6.0"
+        "react-hot-toast": "^2.6.0",
+        "three": "^0.182.0"
     }
 }

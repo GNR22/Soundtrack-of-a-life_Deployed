@@ -106,4 +106,22 @@ class SpotifyService
     {
         return $this->get("albums/{$id}");
     }
+
+    // TRENDING ALBUMS
+    public function getTrendingAlbums()
+    {
+        // Get new releases from Spotify
+        $data = $this->get('browse/new-releases', [
+            'limit' => 12
+        ]);
+
+        return array_map(function ($album) {
+            return [
+                'id' => $album['id'],
+                'title' => $album['name'],
+                'artist' => $album['artists'][0]['name'] ?? 'Unknown',
+                'cover' => $album['images'][0]['url'] ?? 'https://via.placeholder.com/300'
+            ];
+        }, $data['albums']['items'] ?? []);
+    }
 }
