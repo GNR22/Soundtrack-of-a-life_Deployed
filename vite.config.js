@@ -10,4 +10,8 @@ export default defineConfig({
         }),
         react(),
     ],
+    // ADD THIS SECTION BELOW:
+    build: {
+        chunkSizeWarningLimit: 1600, // Increases limit to 1600 KB (1.6 MB)
+    },
 });
