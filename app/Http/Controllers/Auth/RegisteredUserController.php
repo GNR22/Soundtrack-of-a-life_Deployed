@@ -44,8 +44,10 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // 1. COMMENT OUT OR DELETE THIS LINE (Stops Auto-Login)
+        // Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // 2. CHANGE REDIRECT TO LOGIN PAGE
+        return redirect()->route('login');
     }
 }
