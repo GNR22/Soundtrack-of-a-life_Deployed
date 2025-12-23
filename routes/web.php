@@ -32,7 +32,7 @@ Route::get('/', function () {
 */
 
 Route::get('/', function () {
-    return redirect()->route('register');
+    return redirect()->route('login');
 });
 /*
 |--------------------------------------------------------------------------
