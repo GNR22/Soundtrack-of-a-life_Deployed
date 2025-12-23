@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Vite;
-
+use Illuminate\Support\Facades\URL;
 // ▼ IMPORT YOUR SERVICES (Crucial Step) ▼
 use App\Services\SpotifyService;
 use App\Services\LastFmService;
@@ -34,8 +34,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+   public function boot(): void
     {
-        Vite::prefetch(concurrency: 3);
+        // Force HTTPS when in production (Vercel)
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
