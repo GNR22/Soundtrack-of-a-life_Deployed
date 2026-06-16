@@ -61,178 +61,310 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 # 🎵 The Soundtrack of a Life
 
-**The Soundtrack of a Life** is an interactive, web-based musical journey that allows users to explore trending music, track their personal listening history, and curate a digital "soundtrack" of their memories.
+An interactive music discovery and personal music journal application built with Laravel 11, React (Inertia.js), and PostgreSQL. The platform combines data from Spotify, Last.fm, MusicBrainz, and Genius to help users explore artists, albums, music history, and build their own personalized music story.
 
-Built with **Laravel 11** and **React (Inertia.js)**, this project demonstrates a modern, service-oriented architecture that aggregates data from multiple external APIs (Spotify, Last.fm, MusicBrainz) into a seamless user experience.
-
-## 🚀 Live Demo
-**[View the Live Application](https://soundtrack-of-a-life-deployed.vercel.app)**
-
-## ✨ Key Features
-* **Interactive Dashboard:** Features a 3D animated background (Three.js) and a "Coverflow" style album browser.
-* **Multi-API Integration:**
-    * **Spotify:** Core data, album artwork, and trending charts.
-    * **Last.fm:** Detailed artist biographies and album stories.
-    * **MusicBrainz:** Historical context and metadata.
-    * **Lyrics.ovh:** On-demand lyrics fetching.
-* **Cloud-Native Database:** Fully migrated from local MySQL to **Neon DB (PostgreSQL)** for high-performance, serverless data management.
-* **Smart Caching:** Implemented aggressive caching strategies (Redis/Database) to minimize API latency and handle high traffic.
-* **Service-Oriented Architecture:** Backend logic is decoupled into dedicated Service classes for maintainability and scalability.
-
-## 🛠️ Tech Stack
-* **Frontend:** React, Inertia.js, Tailwind CSS, Three.js
-* **Backend:** Laravel 11, PHP 8.2+
-* **Database:** PostgreSQL (Hosted on Neon DB)
-* **Deployment:** Vercel (Serverless Functions)
-
-## ⚙️ Local Development Setup
-
-Follow these steps to run the project locally on your machine.
-
-### 1. Prerequisites
-* PHP 8.2 or higher
-* Composer
-* Node.js & NPM
-* **PostgreSQL Driver:** Ensure `extension=pdo_pgsql` and `extension=pgsql` are uncommented in your `php.ini`.
-
-### 2. Installation
-Clone the repository:
-```bash
-git clone [https://github.com/your-username/soundtrack-of-a-life.git](https://github.com/your-username/soundtrack-of-a-life.git)
-cd soundtrack-of-a-life
-
-
-
-Install dependencies:
-composer install
-npm install
-
-
-Here is the updated README.md file. I have added the "Known Issues & Bugs" section specifically detailing the Spotify playback limitation, as you requested.
-
-You can copy this directly into your file.
-
-Markdown
-
-# 🎵 The Soundtrack of a Life
-
-**The Soundtrack of a Life** is an interactive, web-based musical journey that allows users to explore trending music, track their personal listening history, and curate a digital "soundtrack" of their memories.
-
-Built with **Laravel 11** and **React (Inertia.js)**, this project demonstrates a modern, service-oriented architecture that aggregates data from multiple external APIs (Spotify, Last.fm, MusicBrainz) into a seamless user experience.
+---
 
 ## 🚀 Live Demo
-**[View the Live Application](https://soundtrack-of-a-life-deployed.vercel.app)**
 
-## ✨ Key Features
-* **Interactive Dashboard:** Features a 3D animated background (Three.js) and a "Coverflow" style album browser.
-* **Multi-API Integration:**
-    * **Spotify:** Core data, album artwork, and trending charts.
-    * **Last.fm:** Detailed artist biographies and album stories.
-    * **MusicBrainz:** Historical context and metadata.
-    * **Lyrics.ovh:** On-demand lyrics fetching.
-* **Cloud-Native Database:** Fully migrated from local MySQL to **Neon DB (PostgreSQL)** for high-performance, serverless data management.
-* **Smart Caching:** Implemented aggressive caching strategies (Redis/Database) to minimize API latency and handle high traffic.
-* **Service-Oriented Architecture:** Backend logic is decoupled into dedicated Service classes for maintainability and scalability.
+https://soundtrack-of-a-life-deployed.vercel.app
+
+---
+
+## ✨ Features
+
+* Browse trending artists and albums
+* View artist profiles, discographies, and album details
+* Explore historical music information through MusicBrainz
+* Read artist biographies and album information from Last.fm
+* Access song metadata and lyric links
+* Create a personal music collection with ratings and notes
+* Interactive dashboard with Three.js visual effects
+* Cloud-hosted PostgreSQL database using Neon DB
+* Smart caching system for improved performance
+
+---
 
 ## 🛠️ Tech Stack
-* **Frontend:** React, Inertia.js, Tailwind CSS, Three.js
-* **Backend:** Laravel 11, PHP 8.2+
-* **Database:** PostgreSQL (Hosted on Neon DB)
-* **Deployment:** Vercel (Serverless Functions)
 
-## ⚙️ Local Development Setup
+### Frontend
 
-Follow these steps to run the project locally on your machine.
+* React
+* Inertia.js
+* Tailwind CSS
+* Three.js
 
-### 1. Prerequisites
-* PHP 8.2 or higher
-* Composer
-* Node.js & NPM
-* **PostgreSQL Driver:** Ensure `extension=pdo_pgsql` and `extension=pgsql` are uncommented in your `php.ini`.
+### Backend
 
-### 2. Installation
-Clone the repository:
-```bash
-git clone [https://github.com/your-username/soundtrack-of-a-life.git](https://github.com/your-username/soundtrack-of-a-life.git)
-cd soundtrack-of-a-life
-Install dependencies:
+* Laravel 11
+* PHP 8.2+
 
-Bash
+### Database
 
-composer install
-npm install
-3. Environment Configuration
-Copy the example environment file:
-cp .env.example .env
+* PostgreSQL (Neon DB)
 
-Configure Neon DB: Open .env and update the database section with your Neon Connection String:
+### APIs
+
+* Spotify Web API
+* Last.fm API
+* MusicBrainz API
+* Genius API
+
+### Deployment
+
+* Vercel
+
+---
+
+## 📂 Project Structure
+
+| File Path                                    | Purpose                                            |
+| -------------------------------------------- | -------------------------------------------------- |
+| app/Http/Controllers/MusicController.php     | Main controller that coordinates all music APIs    |
+| app/Http/Controllers/StoryItemController.php | Handles CRUD operations for user music collections |
+| app/Services/SpotifyService.php              | Spotify integration                                |
+| app/Services/LastfmService.php               | Artist biographies and album information           |
+| app/Services/MusicBrainzService.php          | Historical music metadata                          |
+| app/Services/GeniusService.php               | Lyrics and song metadata                           |
+| resources/js/Pages/Dashboard.jsx             | Trending artists dashboard                         |
+| resources/js/Pages/Artist/Show.jsx           | Artist profile page                                |
+| resources/js/Pages/Artist/Albums.jsx         | Artist discography page                            |
+| resources/js/Pages/Artist/AlbumInfo.jsx      | Detailed album information page                    |
+| resources/js/Pages/Artist/History.jsx        | Historical music timeline                          |
+| resources/js/Pages/Story/Index.jsx           | Personal music collection page                     |
+| routes/web.php                               | Application routes                                 |
+
+---
+
+## 🗄️ Database Setup
+
+This project uses Neon PostgreSQL.
+
+Update your `.env` file:
+
+```env
 DB_CONNECTION=pgsql
-DB_HOST=ep-noisy-meadow-123456.us-east-1.aws.neon.tech
+DB_HOST=your-neon-host
+DB_PORT=5432
+DB_DATABASE=your-database
+DB_USERNAME=your-username
+DB_PASSWORD=your-password
+```
+
+If migration issues occur, you may import the provided SQL schema directly into Neon using the SQL Editor.
+
+---
+
+## ⚡ Performance Optimizations
+
+### File-Based Sessions
+
+```env
+SESSION_DRIVER=file
+```
+
+Reduces login latency by avoiding unnecessary cloud database requests.
+
+### File-Based Cache
+
+```env
+CACHE_STORE=file
+```
+
+Stores temporary data locally for faster application response times.
+
+### Extended PHP Execution Time
+
+Added:
+
+```php
+set_time_limit(120);
+```
+
+to allow slower network requests sufficient time to complete.
+
+### Smart API Caching
+
+Implemented using:
+
+```php
+Cache::remember()
+```
+
+Benefits:
+
+* Trending artists cached for 1 hour
+* Album information cached for 24 hours
+* Faster page loads
+* Reduced API calls
+* Improved reliability
+
+---
+
+## ⚙️ Local Installation
+
+Install dependencies:
+
+```bash
+composer install
+npm install
+```
+
+Clear caches:
+
+```bash
+php artisan optimize:clear
+```
+
+Run backend:
+
+```bash
+php artisan serve
+```
+
+Run frontend:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000
+```
+
+If Dashboard access fails, register a new account first.
+
+---
+## 🗄️ Database Setup
+
+This project supports two database configurations:
+
+### Option 1: Local MySQL (phpMyAdmin/XAMPP)
+
+A complete MySQL database dump is included for users who want to run the application locally using XAMPP and phpMyAdmin.
+
+Steps:
+
+1. Start Apache and MySQL in XAMPP.
+2. Open phpMyAdmin.
+3. Create a database named:
+
+```sql
+soundtrack
+```
+
+4. Import the provided MySQL SQL dump file.
+5. Update your `.env` file:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=soundtrack
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+The MySQL dump contains:
+
+* users
+* story_items
+* sessions
+* cache
+* cache_locks
+* migrations
+* password_reset_tokens
+
+along with sample data and foreign key relationships.
+
+---
+
+### Option 2: Neon PostgreSQL (Recommended)
+
+The project was migrated from MySQL to Neon PostgreSQL for cloud-based deployment.
+
+If Laravel migrations fail or encounter compatibility issues, you may import the provided PostgreSQL migration script directly into the Neon SQL Editor.
+
+Steps:
+
+1. Create a Neon project.
+2. Open the SQL Editor.
+3. Paste and execute the provided PostgreSQL script.
+4. Update your `.env` file:
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=ep-noisy-meadow-adqcsvhi-pooler.c-2.us-east-1.aws.neon.tech
 DB_PORT=5432
 DB_DATABASE=soundtrackoflife
 DB_USERNAME=neondb_owner
-DB_PASSWORD=your_neon_password
+DB_PASSWORD=your_password
+```
+
+The PostgreSQL script creates:
+
+* users
+* story_items
+* sessions
+* cache
+* cache_locks
+* migrations
+* password_reset_tokens
+
+and inserts migration history records so Laravel recognizes the database as already migrated.
+
+This bypasses migration issues and allows the application to run immediately after configuration.
+
+---
+
+### Migration Notes
+
+The original application was developed using MySQL and phpMyAdmin. During deployment, the database was migrated to Neon PostgreSQL.
+
+Key adjustments included:
+
+* Converting MySQL AUTO_INCREMENT fields to PostgreSQL IDENTITY columns.
+* Converting tinyint(1) fields to BOOLEAN.
+* Recreating indexes and foreign key constraints.
+* Updating Laravel database configuration to use PostgreSQL.
+* Importing migration history records to maintain Laravel compatibility.
+
+Both database versions are provided for educational purposes and easier local development.
 
 
-Configure API Keys: You will need API keys for the music services:
-SPOTIFY_CLIENT_ID=your_id
-SPOTIFY_CLIENT_SECRET=your_secret
-LASTFM_KEY=your_key
+## 🐛 Known Issues
 
+### Spotify Playback
 
-4. Database Setup
-Since we are using Neon, you don't need a local database server running. Just run the migrations to create tables in the cloud:
-type: 
-php artisan migrate
+Spotify may not play full tracks unless you are logged into Spotify in the same browser.
 
+### Login Redirect
 
-5. Run the Application
-You will need two terminals running:
+Occasionally clicking Login may result in a 404 error.
 
-Terminal 1 (Backend):
-Bash
-php artisan serve
+Solution:
 
+* Refresh the page
+* Navigate back to Dashboard
 
-Terminal 2 (Frontend):
-Bash
+---
 
-npm run dev
-Visit http://localhost:8000 to see the app.
+## 👨‍💻 Developers
 
+* Ryan Ranada
+* Vanessa Arcadio
+* Erica Del Carmen
 
-☁️ Deployment (Vercel)
-This project is configured for deployment on Vercel using a serverless architecture.
+---
 
-vercel.json: Configures the PHP runtime and routing.
+## 🙏 Credits
 
-api/index.php: Serves as a bridge to forward serverless requests to Laravel's public entry point.
-
-AppServiceProvider.php: Forces HTTPS scheme production to prevent "Mixed Content" errors.
-
-To deploy:
-
-Push code to GitHub.
-
-Import project into Vercel.
-
-Set the Framework Preset to Other.
-
-Add Environment Variables (Copy APP_KEY, DB_*, and API keys from local .env).
-
-Critical: Set SESSION_DRIVER and CACHE_STORE to database or cookie in Vercel settings.
-
-🐛 Known Issues & Bugs
-Spotify Full Playback Limitations:
--Not playing the full track? sign in your spotify in the browser it should sync with the system.
--Login button issue (if you click it it will output error 404 just refresh it and it will go to dashboard)
-
-🤝 Credits
-Developed by 
-Ryan Ranada
-Vanessa Arcadio
-Erica Del Carmen 
-
-Background 3D effects powered by Three.js.
-Music data provided by Spotify Web API.
-Metadata provided by MusicBrainz and Last.fm.
+* Three.js for 3D visual effects
+* Spotify Web API
+* Last.fm API
+* MusicBrainz API
+* Genius API
+* Neon PostgreSQL
+* Laravel Framework
